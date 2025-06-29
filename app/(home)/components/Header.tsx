@@ -1,11 +1,22 @@
+import Image from "next/image";
 import React from "react";
+import { LuUser } from "react-icons/lu";
+import { MdOutlineShoppingCart } from "react-icons/md";
 
 export default function Header() {
   return (
     <header className="bg-foreground text-background sticky top-0 z-50 shadow-md">
-      <div className="max-w-[1280px] mx-auto px-3 md:px-4 py-3 flex items-center justify-between">
+      <div className="content_wrapper flex items-center justify-between">
         {/* Logo */}
-        <div className="text-xl font-bold">Logo</div>
+        <div className="text-xl font-bold">
+          <Image
+            src={"/images/steadfast-task-log.png"}
+            alt={"logo"}
+            width={400}
+            height={300}
+            className="w-36"
+          />
+        </div>
 
         {/* Search bar */}
         <div className="flex-1 mx-6 hidden md:block">
@@ -17,12 +28,12 @@ export default function Header() {
         </div>
 
         {/* Actions */}
-        <div className="flex space-x-4">
-          <button className="px-4 py-2 rounded-lg bg-primary text-white hover:bg-primary/80">
-            Cart
+        <div className="flex space-x-3">
+          <button className="p-2">
+            <MdOutlineShoppingCart size={22} />
           </button>
-          <button className="px-4 py-2 rounded-lg border border-primary text-primary hover:bg-primary hover:text-white">
-            Profile
+          <button className="p-2">
+            <LuUser size={22} />
           </button>
         </div>
       </div>
