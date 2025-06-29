@@ -9,7 +9,7 @@ export default function ProductImageGallery({
   thumbnail: string;
 }) {
   return (
-    <div className="w-[380px] min-w-[380px]">
+    <div className="w-full lg:w-[380px] lg:min-w-[380px]">
       <div className="relative h-[380px] w-full border rounded-md bg-gray-100">
         <Image
           src={thumbnail}

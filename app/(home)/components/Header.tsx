@@ -5,16 +5,16 @@ import { MdOutlineShoppingCart } from "react-icons/md";
 
 export default function Header() {
   return (
-    <header className="bg-foreground text-background sticky top-0 z-50 shadow-md">
+    <header className="bg-foreground text-background sticky top-0 z-50 shadow-md px-3">
       <div className="content_wrapper flex items-center justify-between">
         {/* Logo */}
         <div className="text-xl font-bold">
           <Image
-            src={"/images/steadfast-task-log.png"}
+            src={"/images/logo.png"}
             alt={"logo"}
             width={400}
             height={300}
-            className="w-36"
+            className="w-36 h-7"
           />
         </div>
 

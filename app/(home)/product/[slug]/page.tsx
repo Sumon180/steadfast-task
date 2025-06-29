@@ -25,7 +25,7 @@ export default async function ProductPage({
 
   return (
     <>
-      <div>
+      <div className="px-3">
         <div className="content_wrapper flex items-center gap-1 text-sm">
           <Link href={"/"}>Home</Link>{" "}
           <IoIosArrowForward className="text-gray-500" />
@@ -36,8 +36,8 @@ export default async function ProductPage({
           </Link>
         </div>
       </div>
-      <div className="bg-white">
-        <div className="content_wrapper flex items-start justify-between gap-8">
+      <div className="bg-white px-3">
+        <div className="content_wrapper flex flex-col lg:flex-row items-start justify-between gap-8">
           <ProductImageGallery thumbnail={product.thumbnail} />
 
           <div className="w-full">
@@ -59,7 +59,7 @@ export default async function ProductPage({
             <SelectVariant variations={product.variations} />
             <AddToCart />
           </div>
-          <div className="w-[323px] min-w-[323px]">
+          <div className="w-full lg:w-[323px] lg:min-w-[323px]">
             <div className="border p-5 rounded-xl">
               <p className="text-lg">Delivery Options</p>
               <div className="flex items-start gap-2 mt-3">
