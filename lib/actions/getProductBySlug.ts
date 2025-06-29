@@ -5,6 +5,9 @@ export interface Variations {
   image: string;
 }
 
+export interface Images {
+  url: string;
+}
 export interface Product {
   id: number;
   name: string;
@@ -14,6 +17,7 @@ export interface Product {
     regular_price: string;
     discount_price: string;
   };
+  image: Images[];
   thumbnail: string;
   available_stock: number;
   variations: Variations[];

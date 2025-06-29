@@ -50,7 +50,7 @@ export default function AddToCart() {
         </button>
       </div>
       <button
-        className="w-full mt-6 bg-primary text-white px-6 py-2 font-medium rounded-sm hover:bg-indigo-700 transition-all"
+        className="w-full max-w-md mt-6 bg-primary text-white px-6 py-2 font-medium rounded-sm hover:bg-primary transition-all"
         onClick={() => alert(`Added ${quantity} item(s) to cart.`)}
       >
         Add to Cart
