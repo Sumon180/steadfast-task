@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import { LuUser } from "react-icons/lu";
 import { MdOutlineShoppingCart } from "react-icons/md";
@@ -29,9 +30,9 @@ export default function Header() {
 
         {/* Actions */}
         <div className="flex space-x-3">
-          <button className="p-2">
+          <Link href={"/cart"} className="p-2">
             <MdOutlineShoppingCart size={22} />
-          </button>
+          </Link>
           <button className="p-2">
             <LuUser size={22} />
           </button>
