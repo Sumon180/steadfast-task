@@ -7,10 +7,10 @@ import React from "react";
 import { LuUser } from "react-icons/lu";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { Badge } from "@/components/ui/badge";
-import { Search } from "lucide-react";
 import { headerMenus } from "@/lib/data";
 import Sidebar from "./Sidebar";
 import { Category } from "@/types";
+import Search from "./Search";
 
 export default function Header({
   categories,
@@ -39,15 +39,8 @@ export default function Header({
           </div>
 
           {/* Search bar */}
-          <div className="w-full max-w-5/12 flex items-center overflow-hidden rounded border border-transparent focus-within:ring-1 focus-within:ring-primary">
-            <input
-              type="text"
-              placeholder="Search for anything..."
-              className="w-full px-3 py-2 bg-background text-foreground outline-none"
-            />
-            <button className="bg-primary text-white px-4 py-2 hover:bg-primary/90 transition-colors">
-              <Search />
-            </button>
+          <div className="w-full max-w-5/12 hidden md:block">
+            <Search />
           </div>
 
           {/* Actions */}
@@ -67,6 +60,9 @@ export default function Header({
               <LuUser size={22} />
             </button>
           </div>
+        </div>
+        <div className="w-full bg-green-400 md:hidden">
+          <Search />
         </div>
       </div>
       <div className="px-3 bg-white shadow">
