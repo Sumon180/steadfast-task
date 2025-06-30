@@ -11,6 +11,8 @@ export interface Images {
 export interface Product {
   id: number;
   name: string;
+  category_id: number;
+  sub_category_id: number;
   slug: string;
   product_detail: {
     id: number;

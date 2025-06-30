@@ -11,6 +11,10 @@ import ProductImageGallery from "./components/ProductImageGallery";
 import { Separator } from "@/components/ui/separator";
 import ProductDescription from "./components/ProductDescription";
 import ProductSpecification from "./components/ProductSpecification";
+import {
+  getCategoryById,
+  getSubcategoryById,
+} from "@/lib/actions/getCategories";
 
 export default async function ProductPage({
   params,
@@ -22,6 +26,10 @@ export default async function ProductPage({
   const product = await getProductBySlug(slug);
 
   if (!product) return notFound();
+  const category = await getCategoryById(product?.category_id);
+  const subCategory = await getSubcategoryById(product?.sub_category_id);
+
+  console.log(subCategory?.name);
 
   return (
     <>
@@ -29,10 +37,8 @@ export default async function ProductPage({
         <div className="content_wrapper flex items-center gap-1 text-sm">
           <Link href={"/"}>Home</Link>{" "}
           <IoIosArrowForward className="text-gray-500" />
-          <Link href={""}>Tops</Link>{" "}
-          <IoIosArrowForward className="text-gray-500" />
           <Link href={""} className="text-gray-500">
-            T-Shirts
+            {category?.name}
           </Link>
         </div>
       </div>
