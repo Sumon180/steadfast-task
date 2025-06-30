@@ -44,21 +44,33 @@ export default function ProductImageGallery({
 
       {/* Thumbnails */}
       <div className="flex items-center gap-3 mt-5">
-        {imageList.map((img, index) => (
-          <div
-            key={index}
-            onMouseEnter={() => setHoveredIndex(index)}
-            className="cursor-pointer w-14 h-14 rounded border"
-          >
-            <Image
-              src={img.url}
-              alt={`Product image ${index + 1}`}
-              width={100}
-              height={100}
-              className="w-full h-full object-cover"
-            />
-          </div>
-        ))}
+        {imageList.map((img, index) => {
+          const isActive = index === hoveredIndex;
+          return (
+            <div
+              key={index}
+              onMouseEnter={() => setHoveredIndex(index)}
+              onFocus={() => setHoveredIndex(index)}
+              className={`cursor-pointer w-14 h-14 rounded border overflow-hidden transition 
+                ${
+                  isActive
+                    ? "border-primary ring-2 ring-primary"
+                    : "border-gray-300"
+                }
+              `}
+              aria-current={isActive ? "true" : undefined}
+              role="button"
+            >
+              <Image
+                src={img.url}
+                alt={`Product image ${index + 1}`}
+                width={100}
+                height={100}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          );
+        })}
       </div>
     </div>
   );
