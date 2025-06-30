@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { headerMenus } from "@/lib/data";
 import Sidebar from "./Sidebar";
 import { Category } from "@/types";
-import Search from "./Search";
+import SearchBar from "./SearchBar";
 
 export default function Header({
   categories,
@@ -40,7 +40,7 @@ export default function Header({
 
           {/* Search bar */}
           <div className="w-full max-w-5/12 hidden md:block">
-            <Search />
+            <SearchBar />
           </div>
 
           {/* Actions */}
@@ -62,7 +62,7 @@ export default function Header({
           </div>
         </div>
         <div className="w-full bg-green-400 md:hidden">
-          <Search />
+          <SearchBar />
         </div>
       </div>
       <div className="px-3 bg-white shadow">

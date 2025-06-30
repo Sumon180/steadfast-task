@@ -20,7 +20,7 @@ export default function Sidebar({
 }) {
   if (!categories) return <p>Failed to load categories.</p>;
 
-  console.log(categories);
+  // console.log(categories);
 
   return (
     <Drawer direction="left">
