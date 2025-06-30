@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import useCartStore from "@/hooks/useCartStore";
 import { SingleProduct } from "@/types";
+import { toast } from "sonner";
 
 interface AddToCartProps {
   product: SingleProduct;
@@ -17,12 +18,12 @@ export default function AddToCart({ product }: AddToCartProps) {
   const handleAddToCart = async () => {
     try {
       await addItem(product, quantity);
-      alert(`Added ${quantity} item(s) to cart.`);
+      toast.success(`Added ${quantity} item(s) to cart.`);
     } catch (err: unknown) {
       if (err instanceof Error) {
-        alert(err.message);
+        toast(err.message);
       } else {
-        alert("Error adding to cart.");
+        toast.error("Error adding to cart.");
       }
     }
   };
