@@ -68,6 +68,7 @@ export default async function ProductPage({
                 productId: product.id,
                 stock: product.available_stock,
                 name: product.name,
+                slug: product.slug,
                 image: product.thumbnail,
                 discount_price: product.product_detail.discount_price,
                 regular_price: product.product_detail.regular_price,

@@ -75,6 +75,7 @@ export interface OrderItem {
   clientId: string;
   productId: number;
   name: string;
+  slug: string;
   image: string;
   quantity: number;
   stock: number;

@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Trash2 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import useCartStore from "@/hooks/useCartStore";
+import Link from "next/link";
 
 export default function CartProducts() {
   const {
@@ -92,17 +93,24 @@ export default function CartProducts() {
                 />
                 <div className="w-full flex flex-col lg:flex-row items-start gap-2">
                   <div className="w-full lg:w-24 lg:min-w-24 lg:h-24 rounded-md overflow-hidden">
-                    <Image
-                      src={item.image}
-                      alt={item.name}
-                      width={400}
-                      height={400}
-                      className="w-full h-full object-cover"
-                    />
+                    <Link href={`/product/${item.slug}`}>
+                      <Image
+                        src={item.image}
+                        alt={item.name}
+                        width={400}
+                        height={400}
+                        className="w-full h-full object-cover"
+                      />
+                    </Link>
                   </div>
                   <div className="w-full">
                     <div className="flex flex-col lg:flex-row lg:items-center justify-between">
-                      <p className="font-medium">{item.name}</p>
+                      <Link
+                        href={`/product/${item.slug}`}
+                        className="font-medium hover:underline"
+                      >
+                        {item.name}
+                      </Link>
                       <div className="flex items-center gap-3">
                         <span className="font-semibold">
                           ৳{" "}
