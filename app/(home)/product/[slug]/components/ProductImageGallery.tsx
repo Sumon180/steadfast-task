@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import React, { useState } from "react";
+import Zoom from "react-medium-image-zoom";
+import "react-medium-image-zoom/dist/styles.css";
 
 interface ProductImageGalleryProps {
   thumbnail: string;
@@ -28,15 +30,17 @@ export default function ProductImageGallery({
   return (
     <div className="w-full lg:w-[380px] lg:min-w-[380px]">
       {/* Main Image Display */}
-      <div className="relative h-[380px] w-full border rounded-md bg-gray-100">
-        <Image
-          src={displayImage}
-          alt="product image"
-          fill
-          sizes="(max-width: 768px) 100vw, 50vw"
-          className="object-cover rounded-lg"
-        />
-      </div>
+      <Zoom>
+        <div className="relative h-[380px] w-full border rounded-md bg-gray-100">
+          <Image
+            src={displayImage}
+            alt="product image"
+            fill
+            sizes="(max-width: 768px) 100vw, 50vw"
+            className="object-cover rounded-lg"
+          />
+        </div>
+      </Zoom>
 
       {/* Thumbnails */}
       <div className="flex items-center gap-3 mt-5">
@@ -44,7 +48,6 @@ export default function ProductImageGallery({
           <div
             key={index}
             onMouseEnter={() => setHoveredIndex(index)}
-            onMouseLeave={() => setHoveredIndex(null)}
             className="cursor-pointer"
           >
             <Image
