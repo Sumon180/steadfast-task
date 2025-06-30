@@ -70,3 +70,16 @@ export interface Category {
   image: string;
   subcategories: Subcategory[];
 }
+
+export interface OrderItem {
+  clientId: string;
+  productId: number;
+  name: string;
+  image: string;
+  quantity: number;
+  stock: number;
+  discount_price: string;
+  regular_price: string;
+  size: number;
+  color: string;
+}

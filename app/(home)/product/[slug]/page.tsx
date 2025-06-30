@@ -13,6 +13,7 @@ import ProductDescription from "./components/ProductDescription";
 import ProductSpecification from "./components/ProductSpecification";
 import { getCategoryById } from "@/lib/actions/getCategories";
 import RelatedProducts from "./components/RelatedProducts";
+import { generateId } from "@/lib/utils";
 
 export default async function ProductPage({
   params,
@@ -61,7 +62,20 @@ export default async function ProductPage({
               </div>
             </div>
             <SelectVariant variations={product.variations} />
-            <AddToCart product={product} />
+            <AddToCart
+              item={{
+                clientId: generateId(),
+                productId: product.id,
+                stock: product.available_stock,
+                name: product.name,
+                image: product.thumbnail,
+                discount_price: product.product_detail.discount_price,
+                regular_price: product.product_detail.regular_price,
+                quantity: 1,
+                size: 22,
+                color: "Blue",
+              }}
+            />
           </div>
           <div className="w-full lg:w-[323px] lg:min-w-[323px]">
             <div className="border p-5 rounded-xl">

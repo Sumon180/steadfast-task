@@ -1,8 +1,8 @@
-import { SingleProduct } from "@/types";
+import { OrderItem } from "@/types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-interface CartItem extends SingleProduct {
+interface CartItem extends OrderItem {
   quantity: number;
 }
 
@@ -24,17 +24,16 @@ const initialState: Cart = {
 
 interface CartState {
   cart: Cart;
-  addItem: (item: SingleProduct, quantity: number) => Promise<void>;
-  updateItem: (itemId: number, quantity: number) => void;
-  removeItem: (itemId: number) => void;
+  addItem: (item: OrderItem, quantity: number) => Promise<void>;
+  updateItem: (itemId: string, quantity: number) => void;
+  removeItem: (itemId: string) => void;
   clearCart: () => void;
   init: () => void;
 }
 
 const calculateCart = (items: CartItem[]) => {
   const itemsPrice = items.reduce(
-    (acc, item) =>
-      acc + item.quantity * parseFloat(item.product_detail.discount_price),
+    (acc, item) => acc + item.quantity * parseFloat(item.discount_price),
     0
   );
   const taxPrice = Number((itemsPrice * 0.1).toFixed(2));
@@ -57,22 +56,20 @@ const useCartStore = create(
       addItem: async (item, quantity) => {
         const { items } = get().cart;
 
-        const existingItem = items.find((x) => x.id === item.id);
+        const existingItem = items.find((x) => x.productId === item.productId);
 
         if (existingItem) {
           const newQty = existingItem.quantity + quantity;
-          if (newQty > item.available_stock)
-            throw new Error("Not enough stock");
+          if (newQty > item.stock) throw new Error("Not enough stock");
 
           const updatedItems = items.map((x) =>
-            x.id === item.id ? { ...x, quantity: newQty } : x
+            x.productId === item.productId ? { ...x, quantity: newQty } : x
           );
 
           const prices = calculateCart(updatedItems);
           set({ cart: { ...get().cart, items: updatedItems, ...prices } });
         } else {
-          if (quantity > item.available_stock)
-            throw new Error("Not enough stock");
+          if (quantity > item.stock) throw new Error("Not enough stock");
 
           const newItem = { ...item, quantity };
           const updatedItems = [...items, newItem];
@@ -85,7 +82,7 @@ const useCartStore = create(
       updateItem: (itemId, quantity) => {
         const { items } = get().cart;
         const updatedItems = items.map((x) =>
-          x.id === itemId ? { ...x, quantity } : x
+          x.clientId === itemId ? { ...x, quantity } : x
         );
         const prices = calculateCart(updatedItems);
         set({ cart: { ...get().cart, items: updatedItems, ...prices } });
@@ -93,7 +90,7 @@ const useCartStore = create(
 
       removeItem: (itemId) => {
         const { items } = get().cart;
-        const updatedItems = items.filter((x) => x.id !== itemId);
+        const updatedItems = items.filter((x) => x.clientId !== itemId);
         const prices = calculateCart(updatedItems);
         set({ cart: { ...get().cart, items: updatedItems, ...prices } });
       },

@@ -15,12 +15,12 @@ export default function CartProducts() {
   } = useCartStore();
 
   // Track selected item IDs
-  const [selectedItems, setSelectedItems] = useState<number[]>([]);
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
 
   useEffect(() => {
     // Remove selected items that are no longer in cart
     setSelectedItems((prev) =>
-      prev.filter((id) => items.some((i) => i.id === id))
+      prev.filter((id) => items.some((i) => i.clientId === id))
     );
   }, [items]);
 
@@ -31,17 +31,17 @@ export default function CartProducts() {
     if (isAllSelected) {
       setSelectedItems([]);
     } else {
-      setSelectedItems(items.map((item) => item.id));
+      setSelectedItems(items.map((item) => item.clientId));
     }
   };
 
-  const toggleSelectItem = (id: number) => {
+  const toggleSelectItem = (id: string) => {
     setSelectedItems((prev) =>
       prev.includes(id) ? prev.filter((itemId) => itemId !== id) : [...prev, id]
     );
   };
 
-  const handleQuantityChange = (id: number, newQty: number, stock: number) => {
+  const handleQuantityChange = (id: string, newQty: number, stock: number) => {
     if (newQty < 1 || newQty > stock) return;
     updateItem(id, newQty);
   };
@@ -72,12 +72,12 @@ export default function CartProducts() {
       <Separator />
       <div className="p-5">
         {items.map((item) => (
-          <div key={item.id}>
+          <div key={item.clientId}>
             <div className="flex items-center gap-3 bg-gray-100 p-2">
               <input
                 type="checkbox"
-                checked={selectedItems.includes(item.id)}
-                onChange={() => toggleSelectItem(item.id)}
+                checked={selectedItems.includes(item.clientId)}
+                onChange={() => toggleSelectItem(item.clientId)}
                 className="size-4 accent-primary"
               />
               <p className="leading-3">BD FASHION HOUSE</p>
@@ -86,14 +86,14 @@ export default function CartProducts() {
               <div className="flex items-start gap-2">
                 <input
                   type="checkbox"
-                  checked={selectedItems.includes(item.id)}
-                  onChange={() => toggleSelectItem(item.id)}
+                  checked={selectedItems.includes(item.clientId)}
+                  onChange={() => toggleSelectItem(item.clientId)}
                   className="size-4 min-w-4 accent-primary"
                 />
                 <div className="w-full flex flex-col lg:flex-row items-start gap-2">
                   <div className="w-full lg:w-24 lg:min-w-24 lg:h-24 rounded-md overflow-hidden">
                     <Image
-                      src={item.thumbnail}
+                      src={item.image}
                       alt={item.name}
                       width={400}
                       height={400}
@@ -107,15 +107,13 @@ export default function CartProducts() {
                         <span className="font-semibold">
                           ৳{" "}
                           {(
-                            parseFloat(item.product_detail.discount_price) *
-                            item.quantity
+                            parseFloat(item.discount_price) * item.quantity
                           ).toFixed(2)}
                         </span>
                         <span className="text-gray-500 line-through">
                           ৳{" "}
                           {(
-                            parseFloat(item.product_detail.regular_price) *
-                            item.quantity
+                            parseFloat(item.regular_price) * item.quantity
                           ).toFixed(2)}
                         </span>
                       </div>
@@ -129,9 +127,9 @@ export default function CartProducts() {
                           className="w-7 min-w-7 h-7 bg-gray-100 rounded-full flex items-center justify-center"
                           onClick={() =>
                             handleQuantityChange(
-                              item.id,
+                              item.clientId,
                               item.quantity - 1,
-                              item.available_stock
+                              item.stock
                             )
                           }
                         >
@@ -142,22 +140,22 @@ export default function CartProducts() {
                           value={item.quantity}
                           onChange={(e) =>
                             handleQuantityChange(
-                              item.id,
+                              item.clientId,
                               parseInt(e.target.value) || 1,
-                              item.available_stock
+                              item.stock
                             )
                           }
                           min={1}
-                          max={item.available_stock}
+                          max={item.stock}
                           className="w-full text-center outline-none bg-transparent"
                         />
                         <button
                           className="w-7 min-w-7 h-7 bg-gray-100 rounded-full flex items-center justify-center"
                           onClick={() =>
                             handleQuantityChange(
-                              item.id,
+                              item.clientId,
                               item.quantity + 1,
-                              item.available_stock
+                              item.stock
                             )
                           }
                         >
@@ -165,7 +163,7 @@ export default function CartProducts() {
                         </button>
                       </div>
                       <button
-                        onClick={() => removeItem(item.id)}
+                        onClick={() => removeItem(item.clientId)}
                         className="text-gray-600 p-2 hover:bg-red-500 hover:text-white rounded-full"
                       >
                         <Trash2 size={18} />

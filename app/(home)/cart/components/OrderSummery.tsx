@@ -14,7 +14,7 @@ export default function OrderSummery() {
         <p className="text-2xl mb-3">Order Summery</p>
         <div className="flex items-center justify-between text-gray-600">
           <p>Price ({items.length} items)</p>
-          <p>৳{itemsPrice.toFixed(2)}</p>
+          <p>৳{Number(itemsPrice).toFixed(2)}</p>
         </div>
         <div className="flex items-center justify-between text-gray-600 mt-3">
           <p>Shipping fee</p>
@@ -34,7 +34,7 @@ export default function OrderSummery() {
         <div className="border-t border-dashed my-3" />
         <div className="flex items-center justify-between text-gray-600 mt-3 font-medium">
           <p>Sub total</p>
-          <p>৳ {totalPrice.toFixed(2)}</p>
+          <p>৳ {Number(totalPrice.toFixed(2))}</p>
         </div>
         <button className="w-full max-w-md mt-6 bg-primary text-white px-6 py-2 font-medium rounded-sm hover:bg-primary transition-all">
           Proceed to Checkout
