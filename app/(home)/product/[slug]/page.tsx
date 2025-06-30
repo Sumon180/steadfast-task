@@ -167,10 +167,7 @@ export default async function ProductPage({
         <ProductDescription />
         <ProductSpecification />
       </div>
-      <RelatedProducts
-        categoryId={product.category_id}
-        currentSlug={product.slug}
-      />
+      <RelatedProducts categoryId={product.category_id} />
     </>
   );
 }

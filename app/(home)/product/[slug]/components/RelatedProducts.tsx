@@ -7,19 +7,18 @@ import { useEffect, useState } from "react";
 
 interface Props {
   categoryId: number;
-  currentSlug: string;
 }
 
-export default function RelatedProducts({ categoryId, currentSlug }: Props) {
+export default function RelatedProducts({ categoryId }: Props) {
   const [related, setRelated] = useState<Product[]>([]);
 
   useEffect(() => {
     const getProducts = async () => {
-      const data = await fetchRelatedProducts(categoryId, currentSlug);
+      const data = await fetchRelatedProducts(categoryId);
       setRelated(data);
     };
     getProducts();
-  }, [categoryId, currentSlug]);
+  }, [categoryId]);
 
   return (
     <div className="md:px-4 px-3 py-3">
