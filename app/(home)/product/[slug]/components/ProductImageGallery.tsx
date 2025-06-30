@@ -39,7 +39,6 @@ export default function ProductImageGallery({
             sizes="90vw"
             className="object-cover"
             priority
-            unoptimized // temporary remove it
           />
         </div>
       </Zoom>
