@@ -7,8 +7,6 @@ export default async function Home() {
 
   if (!products) return <div>Product not found</div>;
 
-  console.log(products);
-
   return (
     <div className="md:px-4 px-3 py-3">
       <div className="max-w-[1280px] mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
