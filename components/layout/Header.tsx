@@ -39,7 +39,7 @@ export default function Header({
           </div>
 
           {/* Search bar */}
-          <div className="w-full max-w-5/12 mt-4 flex items-center overflow-hidden rounded border border-transparent focus-within:ring-1 focus-within:ring-primary">
+          <div className="w-full max-w-5/12 flex items-center overflow-hidden rounded border border-transparent focus-within:ring-1 focus-within:ring-primary">
             <input
               type="text"
               placeholder="Search for anything..."
