@@ -7,6 +7,8 @@ export default async function Home() {
 
   if (!products) return <div>Product not found</div>;
 
+  console.log(products);
+
   return (
     <div className="max-w-[1280px] mx-auto px-3 md:px-4 py-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
       {products.map((product) => (

@@ -54,12 +54,14 @@ export default function Header({
           <div className="flex space-x-3">
             <Link href={"/cart"} className="p-2 relative">
               <MdOutlineShoppingCart size={22} />
-              <Badge
-                className="absolute top-0 right-0 h-5 min-w-5 rounded-full p-0 font-mono tabular-nums"
-                variant="destructive"
-              >
-                {items.length}
-              </Badge>
+              {items.length > 0 && (
+                <Badge
+                  className="absolute top-0 right-0 h-5 min-w-5 rounded-full p-0 font-mono tabular-nums"
+                  variant="destructive"
+                >
+                  {items.length}
+                </Badge>
+              )}
             </Link>
             <button className="p-2">
               <LuUser size={22} />
