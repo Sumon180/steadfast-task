@@ -31,13 +31,15 @@ export default function ProductImageGallery({
     <div className="w-full lg:w-[380px] lg:min-w-[380px]">
       {/* Main Image Display */}
       <Zoom>
-        <div className="relative h-[380px] w-full border rounded-md bg-gray-100">
+        <div className="relative h-[380px] border rounded-md bg-gray-100 overflow-hidden">
           <Image
             src={displayImage}
-            alt="product image"
+            alt={"product image"}
             fill
-            sizes="(max-width: 768px) 100vw, 50vw"
-            className="object-cover rounded-lg"
+            sizes="90vw"
+            className="object-cover"
+            priority
+            unoptimized // temporary remove it
           />
         </div>
       </Zoom>
