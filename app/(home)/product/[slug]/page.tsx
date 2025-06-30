@@ -63,7 +63,7 @@ export default async function ProductPage({
               </div>
             </div>
             <SelectVariant variations={product.variations} />
-            <AddToCart />
+            <AddToCart product={product} />
           </div>
           <div className="w-full lg:w-[323px] lg:min-w-[323px]">
             <div className="border p-5 rounded-xl">

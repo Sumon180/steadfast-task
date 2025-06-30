@@ -1,6 +1,6 @@
 "use client";
 
-import { Variations } from "@/lib/actions/getProductBySlug";
+import { Variations } from "@/types";
 import Image from "next/image";
 import React, { useState } from "react";
 

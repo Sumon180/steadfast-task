@@ -1,11 +1,18 @@
+import Footer from "@/components/layout/Footer";
+import Header from "@/components/layout/Header";
+import { getCategories } from "@/lib/actions/getCategories";
 import React, { ReactNode } from "react";
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
 
-export default function HomeLayout({ children }: { children: ReactNode }) {
+export default async function HomeLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
+  const categories = await getCategories();
+
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
-      <Header />
+      <Header categories={categories} />
       {children}
       <Footer />
     </div>

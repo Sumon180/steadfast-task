@@ -1,122 +1,182 @@
 "use client";
 
-import { Separator } from "@/components/ui/separator";
-import { Trash2 } from "lucide-react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import React, { useState } from "react";
+import { Trash2 } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
+import useCartStore from "@/hooks/useCartStore";
 
 export default function CartProducts() {
-  const [quantity, setQuantity] = useState(1);
+  const {
+    cart: { items },
+    updateItem,
+    removeItem,
+    clearCart,
+  } = useCartStore();
 
-  const formatQuantity = (qty: number) => {
-    return qty.toString().padStart(2, "0");
-  };
+  // Track selected item IDs
+  const [selectedItems, setSelectedItems] = useState<number[]>([]);
 
-  const handleDecrease = () => {
-    setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
-  };
+  useEffect(() => {
+    // Remove selected items that are no longer in cart
+    setSelectedItems((prev) =>
+      prev.filter((id) => items.some((i) => i.id === id))
+    );
+  }, [items]);
 
-  const handleIncrease = () => {
-    setQuantity((prev) => prev + 1);
-  };
+  const isAllSelected =
+    selectedItems.length === items.length && items.length > 0;
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value);
-    if (!isNaN(value) && value > 0) {
-      setQuantity(value);
-    } else if (e.target.value === "") {
-      setQuantity(0);
+  const handleSelectAll = () => {
+    if (isAllSelected) {
+      setSelectedItems([]);
+    } else {
+      setSelectedItems(items.map((item) => item.id));
     }
   };
+
+  const toggleSelectItem = (id: number) => {
+    setSelectedItems((prev) =>
+      prev.includes(id) ? prev.filter((itemId) => itemId !== id) : [...prev, id]
+    );
+  };
+
+  const handleQuantityChange = (id: number, newQty: number, stock: number) => {
+    if (newQty < 1 || newQty > stock) return;
+    updateItem(id, newQty);
+  };
+
+  if (items.length === 0) {
+    return (
+      <p className="text-center py-8 text-gray-500">Your cart is empty.</p>
+    );
+  }
 
   return (
     <div className="w-full bg-white rounded-sm">
       <div className="flex items-center justify-between p-5">
-        <p className="text-3xl font-medium">My Cart (3)</p>
+        <p className="text-3xl font-medium">My Cart ({items.length})</p>
         <div className="flex items-center gap-5">
           <div className="flex items-center gap-2">
             <input
               type="checkbox"
-              name="select-all"
-              id="select-all"
-              className="size-4"
+              checked={isAllSelected}
+              onChange={handleSelectAll}
+              className="size-4 accent-primary"
             />
-            <label htmlFor="select-all">Select All</label>
+            <label>Select All</label>
           </div>
-          <button>Clear All</button>
+          <button onClick={() => clearCart()}>Clear All</button>
         </div>
       </div>
       <Separator />
       <div className="p-5">
-        <div className="flex items-center gap-3 bg-gray-100 p-2">
-          <input
-            type="checkbox"
-            name="select-all"
-            id="select-all"
-            className="size-4"
-          />
-          <p>BD FASHION HOUSE</p>
-        </div>
-        <div className="p-2">
-          <div className="flex items-start gap-2">
-            <input
-              type="checkbox"
-              name="select-all"
-              id="select-all"
-              className="size-4 min-w-4"
-            />
-            <div className="w-full flex flex-col lg:flex-row items-start gap-2">
-              <div className="w-full lg:w-24 lg:min-w-24 lg:h-24 rounded-md overflow-hidden">
-                <Image
-                  src={"/images/image-543.png"}
-                  alt={"image"}
-                  width={400}
-                  height={400}
-                  className="w-full h-full object-cover"
+        {items.map((item) => (
+          <div key={item.id}>
+            <div className="flex items-center gap-3 bg-gray-100 p-2">
+              <input
+                type="checkbox"
+                checked={selectedItems.includes(item.id)}
+                onChange={() => toggleSelectItem(item.id)}
+                className="size-4 accent-primary"
+              />
+              <p className="leading-3">BD FASHION HOUSE</p>
+            </div>
+            <div className="p-2">
+              <div className="flex items-start gap-2">
+                <input
+                  type="checkbox"
+                  checked={selectedItems.includes(item.id)}
+                  onChange={() => toggleSelectItem(item.id)}
+                  className="size-4 min-w-4 accent-primary"
                 />
-              </div>
-              <div className="w-full">
-                <div className="flex flex-col lg:flex-row lg:items-center justify-between">
-                  <p className="font-medium">
-                    Bestway Brand Air Inflatable 5 In 1 semi Double Sofa{" "}
-                  </p>
-                  <div className="flex items-center gap-3">
-                    <span className="font-semibold">৳1139</span>
-                    <span className="text-gray-500 line-through">৳1139</span>
-                  </div>
-                </div>
-                <p className="text-gray-600 text-sm my-2">
-                  Color: red; Size: M
-                </p>
-                <div className="flex items-center max-lg:justify-between gap-3">
-                  <div className="max-w-40 flex items-center border p-1 rounded-full">
-                    <button
-                      className="w-7 min-w-7 h-7 bg-gray-100 rounded-full flex items-center justify-center"
-                      onClick={handleDecrease}
-                    >
-                      -
-                    </button>
-                    <input
-                      type="text"
-                      value={formatQuantity(quantity)}
-                      onChange={handleInputChange}
-                      className="w-full text-center outline-none bg-transparent"
+                <div className="w-full flex flex-col lg:flex-row items-start gap-2">
+                  <div className="w-full lg:w-24 lg:min-w-24 lg:h-24 rounded-md overflow-hidden">
+                    <Image
+                      src={item.thumbnail}
+                      alt={item.name}
+                      width={400}
+                      height={400}
+                      className="w-full h-full object-cover"
                     />
-                    <button
-                      className="w-7 min-w-7 h-7 bg-gray-100 rounded-full flex items-center justify-center"
-                      onClick={handleIncrease}
-                    >
-                      +
-                    </button>
                   </div>
-                  <button className="text-gray-600 p-2 hover:bg-red-500 hover:text-white rounded-full">
-                    <Trash2 size={18} />
-                  </button>
+                  <div className="w-full">
+                    <div className="flex flex-col lg:flex-row lg:items-center justify-between">
+                      <p className="font-medium">{item.name}</p>
+                      <div className="flex items-center gap-3">
+                        <span className="font-semibold">
+                          ৳{" "}
+                          {(
+                            parseFloat(item.product_detail.discount_price) *
+                            item.quantity
+                          ).toFixed(2)}
+                        </span>
+                        <span className="text-gray-500 line-through">
+                          ৳{" "}
+                          {(
+                            parseFloat(item.product_detail.regular_price) *
+                            item.quantity
+                          ).toFixed(2)}
+                        </span>
+                      </div>
+                    </div>
+                    <p className="text-gray-600 text-sm my-2">
+                      Color: red; Size: M
+                    </p>
+                    <div className="flex items-center max-lg:justify-between gap-3">
+                      <div className="max-w-40 flex items-center border p-1 rounded-full">
+                        <button
+                          className="w-7 min-w-7 h-7 bg-gray-100 rounded-full flex items-center justify-center"
+                          onClick={() =>
+                            handleQuantityChange(
+                              item.id,
+                              item.quantity - 1,
+                              item.available_stock
+                            )
+                          }
+                        >
+                          -
+                        </button>
+                        <input
+                          type="text"
+                          value={item.quantity}
+                          onChange={(e) =>
+                            handleQuantityChange(
+                              item.id,
+                              parseInt(e.target.value) || 1,
+                              item.available_stock
+                            )
+                          }
+                          min={1}
+                          max={item.available_stock}
+                          className="w-full text-center outline-none bg-transparent"
+                        />
+                        <button
+                          className="w-7 min-w-7 h-7 bg-gray-100 rounded-full flex items-center justify-center"
+                          onClick={() =>
+                            handleQuantityChange(
+                              item.id,
+                              item.quantity + 1,
+                              item.available_stock
+                            )
+                          }
+                        >
+                          +
+                        </button>
+                      </div>
+                      <button
+                        onClick={() => removeItem(item.id)}
+                        className="text-gray-600 p-2 hover:bg-red-500 hover:text-white rounded-full"
+                      >
+                        <Trash2 size={18} />
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        ))}
       </div>
     </div>
   );

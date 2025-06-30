@@ -1,23 +1,5 @@
-// lib/getProducts.ts
+import { Product } from "@/types";
 import axios from "axios";
-
-export interface Badge {
-  id: number;
-  name: string;
-  type: number;
-  type_label: string;
-}
-
-export interface Product {
-  id: number;
-  name: string;
-  slug: string;
-  regular_price: string;
-  discount_price: string;
-  thumbnail: string;
-  available_stock: number;
-  badges: Badge[];
-}
 
 interface ProductResponse {
   data: Product[];

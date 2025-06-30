@@ -1,26 +1,6 @@
 // app/actions/getCategories.ts
-export interface Subchild {
-  id: number;
-  name: string;
-  slug: string;
-  image: string;
-}
 
-export interface Subcategory {
-  id: number;
-  name: string;
-  slug: string;
-  image: string;
-  subchilds: Subchild[];
-}
-
-export interface Category {
-  id: number;
-  name: string;
-  slug: string;
-  image: string;
-  subcategories: Subcategory[];
-}
+import { Category, Subcategory } from "@/types";
 
 interface CategoriesResponse {
   message: string;

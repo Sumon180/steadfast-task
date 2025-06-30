@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 import { IoLocationSharp } from "react-icons/io5";
@@ -11,13 +12,15 @@ export default function Footer() {
         <div className="content_wrapper flex flex-wrap gap-20 py-10">
           {/* Logo */}
           <div className="w-80">
-            <Image
-              src="/images/logo.png"
-              alt="logo"
-              width={400}
-              height={300}
-              className="w-36 h-auto"
-            />
+            <Link href={"/"}>
+              <Image
+                src={"/logos/falcon-logo.svg"}
+                alt="logo"
+                width={400}
+                height={300}
+                className="w-36 h-auto"
+              />
+            </Link>
             <p className="mt-3 max-w-60 text-slate-300 text-xs">
               Experience our new platform & Enjoy exiting deals and offers on
               your day to day
