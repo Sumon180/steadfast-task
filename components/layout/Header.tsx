@@ -23,8 +23,8 @@ export default function Header({
 
   return (
     <header className="sticky top-0 z-50 shadow-md">
-      <div className="bg-foreground text-background px-3">
-        <div className="content_wrapper flex items-center justify-between">
+      <div className="bg-foreground text-background p-3">
+        <div className="content_wrapper py-0 flex items-center justify-between">
           {/* Logo */}
           <div className="text-xl font-bold">
             <Link href={"/"}>
@@ -61,7 +61,7 @@ export default function Header({
             </button>
           </div>
         </div>
-        <div className="w-full bg-green-400 md:hidden">
+        <div className="w-full bg-green-400 md:hidden mt-3">
           <SearchBar />
         </div>
       </div>
