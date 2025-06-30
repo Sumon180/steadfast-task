@@ -12,6 +12,7 @@ import { Separator } from "@/components/ui/separator";
 import ProductDescription from "./components/ProductDescription";
 import ProductSpecification from "./components/ProductSpecification";
 import { getCategoryById } from "@/lib/actions/getCategories";
+import RelatedProducts from "./components/RelatedProducts";
 
 export default async function ProductPage({
   params,
@@ -21,8 +22,8 @@ export default async function ProductPage({
   const { slug } = await params;
 
   const product = await getProductBySlug(slug);
-
   if (!product) return notFound();
+
   const category = await getCategoryById(product?.category_id);
 
   console.log(product);
@@ -168,6 +169,10 @@ export default async function ProductPage({
         <ProductDescription />
         <ProductSpecification />
       </div>
+      <RelatedProducts
+        categoryId={product.category_id}
+        currentSlug={product.slug}
+      />
     </>
   );
 }
