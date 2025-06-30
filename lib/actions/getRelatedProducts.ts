@@ -1,4 +1,4 @@
-import { SingleProduct } from "@/types";
+import { Product } from "@/types";
 import axios from "axios";
 
 const API_BASE = "http://157.230.240.97:9999/api/v1/shop/products";
@@ -6,13 +6,13 @@ const API_BASE = "http://157.230.240.97:9999/api/v1/shop/products";
 export const fetchRelatedProducts = async (
   categoryId: number,
   currentSlug: string
-): Promise<SingleProduct[]> => {
+): Promise<Product[]> => {
   try {
     const response = await axios.get(API_BASE);
-    const allProducts: SingleProduct[] = response.data.data;
+    const allProducts: Product[] = response.data.data;
 
     const related = allProducts.filter(
-      (p) => p.category_id === categoryId && p.slug !== currentSlug
+      (p) => p.id === categoryId && p.slug !== currentSlug
     );
 
     return related;
