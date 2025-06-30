@@ -11,10 +11,7 @@ import ProductImageGallery from "./components/ProductImageGallery";
 import { Separator } from "@/components/ui/separator";
 import ProductDescription from "./components/ProductDescription";
 import ProductSpecification from "./components/ProductSpecification";
-import {
-  getCategoryById,
-  getSubcategoryById,
-} from "@/lib/actions/getCategories";
+import { getCategoryById } from "@/lib/actions/getCategories";
 
 export default async function ProductPage({
   params,
@@ -27,7 +24,6 @@ export default async function ProductPage({
 
   if (!product) return notFound();
   const category = await getCategoryById(product?.category_id);
-  const subCategory = await getSubcategoryById(product?.sub_category_id);
 
   return (
     <>

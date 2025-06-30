@@ -16,11 +16,12 @@ export default function ProductImageGallery({
   thumbnail,
   images,
 }: ProductImageGalleryProps) {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
+  // Return early after the hook is called
   if (!images || Object.keys(images).length === 0) return null;
 
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const imageList = Object.values(images);
-
   const displayImage =
     hoveredIndex !== null ? imageList[hoveredIndex].url : thumbnail;
 
@@ -38,19 +39,20 @@ export default function ProductImageGallery({
       </div>
 
       {/* Thumbnails */}
-      <div className="flex items-center gap-2 mt-5">
+      <div className="flex items-center gap-3 mt-5">
         {imageList.map((img, index) => (
           <div
             key={index}
             onMouseEnter={() => setHoveredIndex(index)}
-            className="w-14 h-14 cursor-pointer p-1 rounded border"
+            onMouseLeave={() => setHoveredIndex(null)}
+            className="cursor-pointer"
           >
             <Image
               src={img.url}
               alt={`Product image ${index + 1}`}
               width={100}
               height={100}
-              className="w-full h-full object-cover"
+              className="w-14 h-14 object-cover rounded border"
             />
           </div>
         ))}
