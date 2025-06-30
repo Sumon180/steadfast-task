@@ -1,5 +1,6 @@
 // app/actions/getCategories.ts
 
+import axios from "axios";
 import { Category, Subcategory } from "@/types";
 
 interface CategoriesResponse {
@@ -9,14 +10,19 @@ interface CategoriesResponse {
 
 export async function getCategories(): Promise<Category[] | null> {
   try {
-    const res = await fetch("http://157.230.240.97:9999/api/v1/categories", {
-      cache: "no-store",
-    });
+    const res = await axios.get<CategoriesResponse>(
+      "http://157.230.240.97:9999/api/v1/categories",
+      {
+        // To mimic cache: "no-store", disable caching headers
+        headers: {
+          "Cache-Control": "no-store",
+          Pragma: "no-cache",
+          Expires: "0",
+        },
+      }
+    );
 
-    if (!res.ok) throw new Error("Failed to fetch categories");
-
-    const json: CategoriesResponse = await res.json();
-    return json.data;
+    return res.data.data;
   } catch (error) {
     console.error("Error fetching categories:", error);
     return null;
@@ -25,14 +31,18 @@ export async function getCategories(): Promise<Category[] | null> {
 
 export async function getCategoryById(id: number): Promise<Category | null> {
   try {
-    const res = await fetch("http://157.230.240.97:9999/api/v1/categories", {
-      cache: "no-store",
-    });
+    const res = await axios.get<CategoriesResponse>(
+      "http://157.230.240.97:9999/api/v1/categories",
+      {
+        headers: {
+          "Cache-Control": "no-store",
+          Pragma: "no-cache",
+          Expires: "0",
+        },
+      }
+    );
 
-    if (!res.ok) throw new Error("Failed to fetch categories");
-
-    const json = await res.json();
-    const category = json.data.find((cat: Category) => cat.id === id);
+    const category = res.data.data.find((cat) => cat.id === id);
     return category ?? null;
   } catch (error) {
     console.error("Error fetching category:", error);
