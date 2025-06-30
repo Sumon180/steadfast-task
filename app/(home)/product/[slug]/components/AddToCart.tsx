@@ -31,9 +31,9 @@ export default function AddToCart({ product }: AddToCartProps) {
   return (
     <div className="mt-5">
       <p className="text-sm mb-1">Quantity</p>
-      <div className="max-w-56 flex items-center border p-1 rounded-full">
+      <div className="max-w-56 flex items-center gap-3 border p-1 rounded-full">
         <button
-          className="w-8 h-8 bg-gray-100 rounded-full"
+          className="w-8 min-w-8 h-8 bg-gray-100 rounded-full"
           onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
         >
           -
@@ -47,7 +47,7 @@ export default function AddToCart({ product }: AddToCartProps) {
           className="w-full text-center outline-none bg-transparent"
         />
         <button
-          className="w-8 h-8 bg-gray-100 rounded-full"
+          className="w-8 min-w-8 h-8 bg-gray-100 rounded-full"
           onClick={() => setQuantity((prev) => prev + 1)}
         >
           +

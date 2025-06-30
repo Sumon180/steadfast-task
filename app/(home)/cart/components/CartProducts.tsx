@@ -124,7 +124,7 @@ export default function CartProducts() {
                       Color: red; Size: M
                     </p>
                     <div className="flex items-center max-lg:justify-between gap-3">
-                      <div className="max-w-40 flex items-center border p-1 rounded-full">
+                      <div className="max-w-40 flex items-center gap-3 border p-1 rounded-full">
                         <button
                           className="w-7 min-w-7 h-7 bg-gray-100 rounded-full flex items-center justify-center"
                           onClick={() =>
