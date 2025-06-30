@@ -54,7 +54,7 @@ export default function CartProducts() {
 
   return (
     <div className="w-full bg-white rounded-sm">
-      <div className="flex items-center justify-between p-5">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 p-5">
         <p className="text-3xl font-medium">My Cart ({items.length})</p>
         <div className="flex items-center gap-5">
           <div className="flex items-center gap-2">

@@ -25,6 +25,8 @@ export default async function ProductPage({
   if (!product) return notFound();
   const category = await getCategoryById(product?.category_id);
 
+  console.log(product);
+
   return (
     <>
       <div className="px-3">
