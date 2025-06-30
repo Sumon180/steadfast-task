@@ -29,8 +29,6 @@ export default async function ProductPage({
   const category = await getCategoryById(product?.category_id);
   const subCategory = await getSubcategoryById(product?.sub_category_id);
 
-  console.log(subCategory?.name);
-
   return (
     <>
       <div className="px-3">
@@ -44,7 +42,10 @@ export default async function ProductPage({
       </div>
       <div className="bg-white px-3">
         <div className="content_wrapper flex flex-col lg:flex-row items-start justify-between gap-8">
-          <ProductImageGallery thumbnail={product.thumbnail} />
+          <ProductImageGallery
+            thumbnail={product.thumbnail}
+            images={product.image}
+          />
 
           <div className="w-full">
             <h2 className="text-[20px] font-medium text-gray-900">

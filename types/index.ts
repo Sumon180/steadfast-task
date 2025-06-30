@@ -35,7 +35,11 @@ export interface SingleProduct {
     regular_price: string;
     discount_price: string;
   };
-  image: Images[];
+  image: {
+    [key: string]: {
+      url: string;
+    };
+  };
   thumbnail: string;
   available_stock: number;
   variations: Variations[];
