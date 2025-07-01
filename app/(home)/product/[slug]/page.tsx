@@ -14,6 +14,8 @@ import ProductSpecification from "./components/ProductSpecification";
 import { getCategoryById } from "@/lib/actions/getCategories";
 import RelatedProducts from "./components/RelatedProducts";
 import { generateId } from "@/lib/utils";
+import { IoShareSocialOutline } from "react-icons/io5";
+import { FiHeart } from "react-icons/fi";
 
 export default async function ProductPage({
   params,
@@ -49,7 +51,13 @@ export default async function ProductPage({
             <h2 className="text-[20px] font-medium text-gray-900">
               {product.name}
             </h2>
-            <RatingSummery />
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+              <RatingSummery />
+              <div className="flex items-center gap-3">
+                <FiHeart />
+                <IoShareSocialOutline />
+              </div>
+            </div>
 
             <ProductPrice
               price={product.product_detail.regular_price}
