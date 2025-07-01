@@ -34,11 +34,11 @@ export default function ProductImageGallery({
         <div className="relative h-[380px] border rounded-md bg-gray-100 overflow-hidden">
           <Image
             src={displayImage}
-            alt={"product image"}
+            alt="product image"
             fill
-            sizes="90vw"
+            sizes="(min-width: 1024px) 380px, 90vw"
             className="object-cover"
-            priority
+            priority={displayImage === thumbnail}
           />
         </div>
       </Zoom>

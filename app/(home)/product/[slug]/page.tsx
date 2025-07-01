@@ -16,6 +16,7 @@ import RelatedProducts from "./components/RelatedProducts";
 import { generateId } from "@/lib/utils";
 import { IoShareSocialOutline } from "react-icons/io5";
 import { FiHeart } from "react-icons/fi";
+import { Suspense } from "react";
 
 export default async function ProductPage({
   params,
@@ -30,7 +31,7 @@ export default async function ProductPage({
   const category = await getCategoryById(product?.category_id);
 
   return (
-    <>
+    <Suspense fallback={<div>Loading...</div>}>
       <div className="px-3">
         <div className="content_wrapper flex items-center gap-1 text-sm">
           <Link href={"/"}>Home</Link>{" "}
@@ -191,6 +192,6 @@ export default async function ProductPage({
         <ProductSpecification />
       </div>
       <RelatedProducts categoryId={product.category_id} />
-    </>
+    </Suspense>
   );
 }

@@ -21,8 +21,6 @@ export default function Header({
     cart: { items },
   } = useCartStore();
 
-  console.log(items);
-
   return (
     <header className="sticky top-0 z-50 shadow-md">
       <div className="bg-foreground text-background p-3">
@@ -36,6 +34,7 @@ export default function Header({
                 width={400}
                 height={300}
                 className="w-36 h-7"
+                priority
               />
             </Link>
           </div>
