@@ -11,6 +11,7 @@ interface Cart {
   itemsPrice: number;
   taxPrice: number;
   shippingPrice: number;
+  discountAmount: number;
   totalPrice: number;
 }
 
@@ -19,6 +20,7 @@ const initialState: Cart = {
   itemsPrice: 0,
   taxPrice: 0,
   shippingPrice: 0,
+  discountAmount: 0,
   totalPrice: 0,
 };
 
@@ -27,23 +29,28 @@ interface CartState {
   addItem: (item: OrderItem, quantity: number) => Promise<void>;
   updateItem: (itemId: string, quantity: number) => void;
   removeItem: (itemId: string) => void;
+  applyCoupon: (code: string) => void;
   clearCart: () => void;
   init: () => void;
 }
 
-const calculateCart = (items: CartItem[]) => {
+const calculateCart = (items: CartItem[], discountAmount = 0) => {
   const itemsPrice = items.reduce(
     (acc, item) => acc + item.quantity * parseFloat(item.discount_price),
     0
   );
   const taxPrice = Number((itemsPrice * 0.1).toFixed(2));
   const shippingPrice = items.length > 0 ? 5 : 0;
-  const totalPrice = itemsPrice + taxPrice + shippingPrice;
+  const totalPrice = Math.max(
+    0,
+    itemsPrice + taxPrice + shippingPrice - discountAmount
+  );
 
   return {
     itemsPrice,
     taxPrice,
     shippingPrice,
+    discountAmount,
     totalPrice,
   };
 };
@@ -94,7 +101,29 @@ const useCartStore = create(
         const prices = calculateCart(updatedItems);
         set({ cart: { ...get().cart, items: updatedItems, ...prices } });
       },
+      applyCoupon: (code) => {
+        const { itemsPrice, taxPrice, shippingPrice } = get().cart;
+        let discount = 0;
 
+        if (code === "DISCOUNT10") {
+          discount = itemsPrice * 0.1;
+        } else if (code === "FLAT100") {
+          discount = 100;
+        }
+
+        const totalPrice = Math.max(
+          0,
+          itemsPrice + taxPrice + shippingPrice - discount
+        );
+
+        set({
+          cart: {
+            ...get().cart,
+            discountAmount: discount,
+            totalPrice,
+          },
+        });
+      },
       clearCart: () => set({ cart: initialState }),
       init: () => set({ cart: initialState }),
     }),

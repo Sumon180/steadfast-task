@@ -5,11 +5,11 @@ import useCartStore from "@/hooks/useCartStore";
 
 export default function OrderSummery() {
   const {
-    cart: { items, itemsPrice },
+    cart: { items, itemsPrice, totalPrice, discountAmount },
+    applyCoupon,
   } = useCartStore();
 
   const [coupon, setCoupon] = useState("DISCOUNT10");
-  const [discountAmount, setDiscountAmount] = useState(0);
   const [appliedCoupon, setAppliedCoupon] = useState<string | null>(null);
   const [error, setError] = useState("");
 
@@ -17,22 +17,14 @@ export default function OrderSummery() {
     const code = coupon.trim().toUpperCase();
     setError(""); // Reset error
 
-    if (code === "DISCOUNT10") {
-      const discount = itemsPrice * 0.1;
-      setDiscountAmount(discount);
-      setAppliedCoupon(code);
-    } else if (code === "FLAT100") {
-      const discount = 100;
-      setDiscountAmount(discount);
+    if (["DISCOUNT10", "FLAT100"].includes(code)) {
+      applyCoupon(code);
       setAppliedCoupon(code);
     } else {
       setError("Invalid coupon code");
-      setDiscountAmount(0);
       setAppliedCoupon(null);
     }
   };
-
-  const totalAfterDiscount = Math.max(0, itemsPrice - discountAmount);
 
   return (
     <div className="w-full lg:w-[418px] lg:min-w-[418px]">
@@ -92,7 +84,7 @@ export default function OrderSummery() {
 
         <div className="flex items-center justify-between text-black font-semibold mt-3">
           <p>Total</p>
-          <p>৳ {totalAfterDiscount.toFixed(2)}</p>
+          <p>৳ {totalPrice.toFixed(2)}</p>
         </div>
 
         <button className="w-full max-w-md mt-6 bg-primary text-white px-6 py-2 font-medium rounded-sm hover:bg-primary transition-all">
