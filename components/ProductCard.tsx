@@ -25,13 +25,14 @@ export default function ProductCard({ product }: { product: Product }) {
           src={product.thumbnail}
           alt={product.name}
           fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
           className="object-cover transition-transform duration-300 group-hover:scale-105"
         />
-        {product.badges?.length && (
+        {product.badges?.length ? (
           <span className="absolute top-2 left-2 bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
             {product.badges[0].name}
           </span>
-        )}
+        ) : null}
       </div>
 
       <div className="p-4">
