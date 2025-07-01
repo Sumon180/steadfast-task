@@ -1,4 +1,4 @@
-// app/actions/getCategories.ts
+"use server";
 
 import axios from "axios";
 import { Category, Subcategory } from "@/types";
@@ -11,7 +11,7 @@ interface CategoriesResponse {
 export async function getCategories(): Promise<Category[] | null> {
   try {
     const res = await axios.get<CategoriesResponse>(
-      "http://157.230.240.97:9999/api/v1/categories",
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/categories`,
       {
         // To mimic cache: "no-store", disable caching headers
         headers: {
@@ -32,7 +32,7 @@ export async function getCategories(): Promise<Category[] | null> {
 export async function getCategoryById(id: number): Promise<Category | null> {
   try {
     const res = await axios.get<CategoriesResponse>(
-      "http://157.230.240.97:9999/api/v1/categories",
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/categories`,
       {
         headers: {
           "Cache-Control": "no-store",

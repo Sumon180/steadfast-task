@@ -1,3 +1,5 @@
+"use server";
+
 import { SingleProduct } from "@/types";
 import axios from "axios";
 
@@ -10,7 +12,7 @@ export const getProductBySlug = async (
 ): Promise<SingleProduct | null> => {
   try {
     const res = await axios.get<ProductResponse>(
-      `http://157.230.240.97:9999/api/v1/product/${slug}`
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/product/${slug}`
     );
     return res.data.data;
   } catch (error) {

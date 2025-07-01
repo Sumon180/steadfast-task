@@ -1,3 +1,5 @@
+"use server";
+
 import { Product } from "@/types";
 import axios from "axios";
 
@@ -6,8 +8,13 @@ interface ProductResponse {
 }
 
 export const getProducts = async (): Promise<Product[]> => {
-  const res = await axios.get<ProductResponse>(
-    "http://157.230.240.97:9999/api/v1/shop/products"
-  );
-  return res.data.data;
+  try {
+    const res = await axios.get<ProductResponse>(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/shop/products`
+    );
+    return res.data.data;
+  } catch (error) {
+    console.error("Failed to fetch products:", error);
+    return [];
+  }
 };

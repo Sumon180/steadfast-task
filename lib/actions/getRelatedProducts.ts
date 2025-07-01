@@ -1,7 +1,9 @@
+"use server";
+
 import { Product } from "@/types";
 import axios from "axios";
 
-const API_BASE = "http://157.230.240.97:9999/api/v1/shop/products";
+const API_BASE = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/shop/products`;
 
 export const fetchRelatedProducts = async (
   categoryId: number
